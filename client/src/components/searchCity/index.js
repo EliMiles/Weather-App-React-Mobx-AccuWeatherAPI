@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
 
-import Test from '../../components/test';
-
-class Main extends Component {
+class SearchCity extends Component {
     render() {
         return (
             <div>
-                <Test />
+                SearchCity
             </div>
         )
     }
 }
 
-export default Main;
+export default SearchCity;
