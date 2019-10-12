@@ -8,14 +8,9 @@
     float: right;
 }
 
-.Navbar-button-left {
-    margin-right: 1px;
-    margin-top: 2px;
-    width: 150px;
-}
-
-.Navbar-button-right {
+.Navbar-button {
     margin-left: 1px;
+    margin-right: 1px;
     margin-top: 2px;
     width: 150px;
 }

@@ -9,8 +9,8 @@ class Header extends Component {
             <Navbar bg="info" expand="true">
                 <span className="Navbar-title">Weather App</span>
                 <span className="Navbar-buttons">
-                    <Button className="Navbar-button-left" variant="outline-light" href="/">Home</Button>
-                    <Button className="Navbar-button-right" variant="outline-light" href="/favorites">Favorites</Button>
+                    <Button className="Navbar-button" variant="outline-light" href="/">Home</Button>
+                    <Button className="Navbar-button" variant="outline-light" href="/favorites">Favorites</Button>
                 </span>
             </Navbar>
         )
