@@ -5,6 +5,8 @@ import header from './components/header';
 import homePage from './pages/homePage';
 import favoritesPage from './pages/favoritesPage';
 
+import './style.css';
+
 const AppRouter = () => {
     return (
         <div>
