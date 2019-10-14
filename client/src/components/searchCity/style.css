@@ -4,3 +4,11 @@
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+.search-form-error-msg {
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: red;
+}
