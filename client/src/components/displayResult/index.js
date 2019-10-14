@@ -20,20 +20,27 @@ class DisplayResult extends Component {
         }
     }
 
-    // if(cityKey !== null){
-    //     const res = await axios.get('http://dataservice.accuweather.com/currentconditions/v1/' + cityKey + '?apikey=' + apiKeys.AccuWeatherKey);
-    //     console.log('Current Conditions endpoint was activated !');
-    //     if(res !== undefined && res.data.length > 0){
-    //         console.log(res.data[0].Temperature.Metric);
-    //     }
-    //     else{
-    //         console.log('Error - can not find the temperature of this city !');
-    //     }
-    // }
+    componentDidMount(){
+        this.setCurrentSelctedCityTemperature();
+    }
+
+    setCurrentSelctedCityTemperature = async () => {
+        const currentCityKey = this.props.CurrentSelectedCityStore.getCurrentSelctedCity.key;
+        if(currentCityKey !== null && currentCityKey !== undefined){
+            const res = await axios.get('http://dataservice.accuweather.com/currentconditions/v1/' + currentCityKey + '?apikey=' + apiKeys.AccuWeatherKey);
+            console.log('Current Conditions endpoint was activated !');
+            if(res !== undefined && res.data.length > 0){
+                const temperature = res.data[0].Temperature.Metric.Value + ' ' + res.data[0].Temperature.Metric.Unit;
+                this.setState({currentSelctedCityTemperature:temperature});
+                //TODO : the temperature does not updating well !!!!
+            }
+            else{
+                console.log('Error - can not find the temperature of this city !');
+            }
+        }
+    }
 
     render() {
-        console.log(this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name + '  '
-        + this.props.CurrentSelectedCityStore.getCurrentSelctedCity.key);
         return (
             <div>
                 <div>{this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name}</div>

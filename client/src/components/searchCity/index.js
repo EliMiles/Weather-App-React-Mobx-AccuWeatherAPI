@@ -24,8 +24,6 @@ class SearchCity extends Component {
     }
 
     changeHandler = (e) => {
-
-        //this.setState({[e.target.name]:e.target.value})
         this.setState({searchInput:e.target.value})
     }
 
@@ -52,8 +50,6 @@ class SearchCity extends Component {
     searchMyCity = async (cityName) => {
         const cityName_lowerCase = cityName.toLowerCase();
         const cityName_no_spaces = cityName_lowerCase.replace(/\s+/g,' ').trim();
-
-        //console.log(cityName_no_spaces);
 
         let isExist = false;
 
@@ -105,8 +101,6 @@ class SearchCity extends Component {
                 });
             }
         }
-
-        //console.log(this.props.CityKeysStore.getAllCityKeys);
     }
 
     render() {
