@@ -25,7 +25,8 @@ class SearchCity extends Component {
 
     changeHandler = (e) => {
 
-        this.setState({[e.target.name]:e.target.value})
+        //this.setState({[e.target.name]:e.target.value})
+        this.setState({searchInput:e.target.value})
     }
 
     handleKeyPress = (event) => {
@@ -52,10 +53,9 @@ class SearchCity extends Component {
         const cityName_lowerCase = cityName.toLowerCase();
         const cityName_no_spaces = cityName_lowerCase.replace(/\s+/g,' ').trim();
 
-        console.log(cityName_no_spaces);
+        //console.log(cityName_no_spaces);
 
         let isExist = false;
-        //let foundCity = null;
 
         this.props.CityKeysStore.getAllCityKeys.forEach(cityKey => {
             if(cityKey.name.toLowerCase() === cityName_no_spaces){
@@ -63,17 +63,20 @@ class SearchCity extends Component {
             }
         })
 
-        // this.props.CityKeysStore.getAllCityKeys.forEach(cityKey => {
-        //     if(cityKey.name.toLowerCase() === cityName_no_spaces){
-        //         foundCity = {name:cityKey.name,key:cityKey.key};
-        //         isExist = true;
-        //     }
-        // })
-
         if(isExist){
-            if(this.props.CurrentSelectedCityStore.getCurrentSelctedCity !== cityName_no_spaces){
-                this.props.CurrentSelectedCityStore.changeCurrentSelctedCity(cityName_no_spaces);
-                console.log('if there is NO change something is wrong with this console !');
+            if(this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name !== cityName_no_spaces){
+                const arrOfKeys = this.props.CityKeysStore.getAllCityKeys.map(cityKey => {
+                    if(cityKey.name.toLowerCase() === cityName_no_spaces){
+                        return cityKey.key;
+                    }
+                    else{
+                        return null;
+                    }
+                })
+
+                const currentSelctedCityKey = arrOfKeys.filter(key => key !== null);
+
+                this.props.CurrentSelectedCityStore.changeCurrentSelctedCity({name:cityName_no_spaces,key:currentSelctedCityKey[0]});
             }
 
             this.setState({
@@ -82,20 +85,19 @@ class SearchCity extends Component {
                 isCityAvailable:true
             });
         }
-        else{
+        else{ // new city to check
             const res = await axios.get('http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=' + apiKeys.AccuWeatherKey + '&q=' + cityName_no_spaces);
             console.log('Autocomplete search endpoint was activated !');
             if(res !== undefined && res.data.length > 0){
                 this.props.CityKeysStore.addCityKey({name:cityName_no_spaces,key:res.data[0].Key});
-                this.props.CurrentSelectedCityStore.changeCurrentSelctedCity(cityName_no_spaces);
+                this.props.CurrentSelectedCityStore.changeCurrentSelctedCity({name:cityName_no_spaces,key:res.data[0].Key});
                 this.setState({
                     searchInput:'',
                     lastSearchedCity:cityName_no_spaces,
                     isCityAvailable:true
                 });
             }
-            else{
-                console.log('Error - there is no such city !');
+            else{ // the city is not recognized by AccuWeather API !
                 this.setState({
                     searchInput:'',
                     lastSearchedCity:cityName_no_spaces,
@@ -104,35 +106,7 @@ class SearchCity extends Component {
             }
         }
 
-        // if(isExist){
-        //     cityKey = foundCity.key;
-        // }
-        // else{
-        //     const res = await axios.get('http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=' + apiKeys.AccuWeatherKey + '&q=' + cityName_no_spaces);
-        //     console.log('Autocomplete search endpoint was activated !');
-        //     if(res !== undefined && res.data.length > 0){
-        //         cityKey = res.data[0].Key;
-        //         this.props.CityKeysStore.addCityKey({name:res.data[0].LocalizedName,key:res.data[0].Key});
-        //     }
-        //     else{
-        //         console.log('Error - there is no such city !');
-        //     }
-        // }
-        
-        // if(cityKey !== null){
-        //     const res = await axios.get('http://dataservice.accuweather.com/currentconditions/v1/' + cityKey + '?apikey=' + apiKeys.AccuWeatherKey);
-        //     console.log('Current Conditions endpoint was activated !');
-        //     if(res !== undefined && res.data.length > 0){
-        //         console.log(res.data[0].Temperature.Metric);
-        //     }
-        //     else{
-        //         console.log('Error - can not find the temperature of this city !');
-        //     }
-        // }
-
         //console.log(this.props.CityKeysStore.getAllCityKeys);
-
-        //this.setState({searchInput:''})
     }
 
     render() {
