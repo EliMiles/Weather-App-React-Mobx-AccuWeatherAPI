@@ -3,15 +3,16 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'mobx-react';
 
 import AppRouter from './AppRouter';
-import TodosStore from './strores/TodosStore';
+
 import CityKeysStore from './strores/CityKeysStore';
 import CurrentSelectedCityStore from './strores/CurrentSelectedCityStore';
+import CurrentCityTemperatureStore from './strores/CurrentCityTemperatureStore';
 
 ReactDOM.render(
     <Provider
-    TodosStore={TodosStore}
     CityKeysStore={CityKeysStore}
     CurrentSelectedCityStore={CurrentSelectedCityStore}
+    CurrentCityTemperatureStore={CurrentCityTemperatureStore}
     >
         <AppRouter />
     </Provider>,
