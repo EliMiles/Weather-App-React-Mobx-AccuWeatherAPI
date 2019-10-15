@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import { inject, observer } from 'mobx-react';
+import { WiCelsius } from "react-icons/wi";
 
 import FiveDaysForecast from '../fiveDaysForecast';
 import apiKeys from '../../apiKeys.js'; // (.gitignore) src/apiKeys.js => module.exports = {AccuWeatherKey : 'your key'}
@@ -46,7 +47,7 @@ class DisplayResult extends Component {
         return (
             <div>
                 <div>{this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name}</div>
-                <div>{this.props.CurrentCityTemperatureStore.getCurrentCityTemperature.temperatureMetricValue} {this.props.CurrentCityTemperatureStore.getCurrentCityTemperature.temperatureMetricUnit}</div>
+                <div>{this.props.CurrentCityTemperatureStore.getCurrentCityTemperature.temperatureMetricValue}<WiCelsius className="WiDegrees" /></div>
                 <FiveDaysForecast />
             </div>
         )
