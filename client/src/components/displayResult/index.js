@@ -26,37 +26,35 @@ class DisplayResult extends Component {
     }
 
     render() {
-        // this.getTemperature().then(res => {
-        //     if(res !== undefined){
-        //         if(res.data.length > 0){
-        //             const name = this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name;
-        //             const key = this.props.CurrentSelectedCityStore.getCurrentSelctedCity.key;
-        //             const temperatureMetricValue = res.data[0].Temperature.Metric.Value;
-        //             const temperatureMetricUnit = res.data[0].Temperature.Metric.Unit;
-        //             this.props.CurrentSelectedCityStore.changeCurrentSelctedCity({
-        //                 name:name,
-        //                 key:key,
-        //                 temperatureMetricValue:temperatureMetricValue,
-        //                 temperatureMetricUnit:temperatureMetricUnit
-        //             });
-        //         }
-        //     }
-        //     else{
-        //         console.log('Error - can not find the temperature of this city !');
-        //     }
-        // }, reason => {
-        //     console.error(reason); // Error!
-        // });
-
-        this.props.CurrentSelectedCityStore.changeCurrentSelctedCity({
-            name:'paris',
-            key:'1234',
-            temperatureMetricValue:'15',
-            temperatureMetricUnit:'C'
+        this.getTemperature().then(res => {
+            if(res !== undefined){
+                if(res.data.length > 0){
+                    const name = this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name;
+                    const key = this.props.CurrentSelectedCityStore.getCurrentSelctedCity.key;
+                    const temperatureMetricValue = res.data[0].Temperature.Metric.Value;
+                    const temperatureMetricUnit = res.data[0].Temperature.Metric.Unit;
+                    this.props.CurrentSelectedCityStore.changeCurrentSelctedCity({
+                        name:name,
+                        key:key,
+                        temperatureMetricValue:temperatureMetricValue,
+                        temperatureMetricUnit:temperatureMetricUnit
+                    });
+                }
+            }
+            else{
+                console.log('Error - can not find the temperature of this city !');
+            }
+        }, reason => {
+            console.error(reason); // Error!
         });
-        
-        // PrecipitationType
 
+        // this.props.CurrentSelectedCityStore.changeCurrentSelctedCity({
+        //     name:'paris',
+        //     key:'1234',
+        //     temperatureMetricValue:'15',
+        //     temperatureMetricUnit:'C'
+        // });
+        
         return (
             <Container>
                 <Row>
