@@ -23,18 +23,18 @@ class SearchCity extends Component {
         }
     }
 
-    changeHandler = (e) => {
+    changeHandler = (e) => { // handle changes on the input tag
         this.setState({searchInput:e.target.value})
     }
 
-    handleKeyPress = (event) => {
+    handleKeyPress = (event) => { // handle keyboard presses
         
         if(event.key === 'Enter'){
             this.searchMyCity(this.state.searchInput);
         }
     }
 
-    handleMouseClick(event){
+    handleMouseClick(event){ // handle mouse presses
 
         switch(event.which){
             case 1: {
@@ -72,7 +72,12 @@ class SearchCity extends Component {
 
                 const currentSelctedCityKey = arrOfKeys.filter(key => key !== null);
 
-                this.props.CurrentSelectedCityStore.changeCurrentSelctedCity({name:cityName_no_spaces,key:currentSelctedCityKey[0]});
+                this.props.CurrentSelectedCityStore.changeCurrentSelctedCity({
+                    name:cityName_no_spaces,
+                    key:currentSelctedCityKey[0],
+                    temperatureMetricValue:'',
+                    temperatureMetricUnit:''
+                });
             }
 
             this.setState({
@@ -86,7 +91,12 @@ class SearchCity extends Component {
             console.log('Autocomplete search endpoint was activated !');
             if(res !== undefined && res.data.length > 0){
                 this.props.CityKeysStore.addCityKey({name:cityName_no_spaces,key:res.data[0].Key});
-                this.props.CurrentSelectedCityStore.changeCurrentSelctedCity({name:cityName_no_spaces,key:res.data[0].Key});
+                this.props.CurrentSelectedCityStore.changeCurrentSelctedCity({
+                    name:cityName_no_spaces,
+                    key:res.data[0].Key,
+                    temperatureMetricValue:'',
+                    temperatureMetricUnit:''
+                });
                 this.setState({
                     searchInput:'',
                     lastSearchedCity:cityName_no_spaces,

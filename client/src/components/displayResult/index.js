@@ -8,7 +8,6 @@ import apiKeys from '../../apiKeys.js'; // (.gitignore) src/apiKeys.js => module
 
 import './style.css';
 
-@inject('CurrentCityTemperatureStore')
 @inject('CurrentSelectedCityStore')
 @inject('CityKeysStore')
 @observer
@@ -28,10 +27,13 @@ class DisplayResult extends Component {
         this.getTemperature().then(res => {
             if(res !== undefined){
                 if(res.data.length > 0){
+                    const name = this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name;
+                    const key = this.props.CurrentSelectedCityStore.getCurrentSelctedCity.key;
                     const temperatureMetricValue = res.data[0].Temperature.Metric.Value;
                     const temperatureMetricUnit = res.data[0].Temperature.Metric.Unit;
-                    this.props.CurrentCityTemperatureStore.changeCurrentCityTemperature({
-                        name:this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name,
+                    this.props.CurrentSelectedCityStore.changeCurrentSelctedCity({
+                        name:name,
+                        key:key,
                         temperatureMetricValue:temperatureMetricValue,
                         temperatureMetricUnit:temperatureMetricUnit
                     });
@@ -47,7 +49,7 @@ class DisplayResult extends Component {
         return (
             <div>
                 <div>{this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name}</div>
-                <div>{this.props.CurrentCityTemperatureStore.getCurrentCityTemperature.temperatureMetricValue}<WiCelsius className="WiDegrees" /></div>
+                <div>{this.props.CurrentSelectedCityStore.getCurrentSelctedCity.temperatureMetricValue}<WiCelsius className="WiDegrees" /></div>
                 <FiveDaysForecast />
             </div>
         )
