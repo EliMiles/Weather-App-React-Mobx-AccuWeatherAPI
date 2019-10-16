@@ -33,11 +33,15 @@ class DisplayResult extends Component {
                     const key = this.props.CurrentSelectedCityStore.getCurrentSelctedCity.key;
                     const temperatureMetricValue = res.data[0].Temperature.Metric.Value;
                     const temperatureMetricUnit = res.data[0].Temperature.Metric.Unit;
+                    const WeatherText = res.data[0].WeatherText;
+                    const WeatherIcon = res.data[0].WeatherIcon;
                     this.props.CurrentSelectedCityStore.changeCurrentSelctedCity({
                         name:name,
                         key:key,
                         temperatureMetricValue:temperatureMetricValue,
-                        temperatureMetricUnit:temperatureMetricUnit
+                        temperatureMetricUnit:temperatureMetricUnit,
+                        WeatherText:WeatherText,
+                        WeatherIcon:WeatherIcon
                     });
                 }
             }
@@ -80,7 +84,7 @@ class DisplayResult extends Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col className="PrecipitationType">PrecipitationType</Col>
+                    <Col className="WeatherText">{this.props.CurrentSelectedCityStore.getCurrentSelctedCity.WeatherText}</Col>
                 </Row>
                 <Row>
                     <Col className="FiveDaysForecast"><FiveDaysForecast /></Col>

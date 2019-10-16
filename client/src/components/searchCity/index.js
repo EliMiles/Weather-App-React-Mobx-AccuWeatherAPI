@@ -76,7 +76,9 @@ class SearchCity extends Component {
                     name:cityName_no_spaces,
                     key:currentSelctedCityKey[0],
                     temperatureMetricValue:'',
-                    temperatureMetricUnit:''
+                    temperatureMetricUnit:'',
+                    WeatherText:'',
+                    WeatherIcon:''
                 });
             }
 
@@ -95,7 +97,9 @@ class SearchCity extends Component {
                     name:cityName_no_spaces,
                     key:res.data[0].Key,
                     temperatureMetricValue:'',
-                    temperatureMetricUnit:''
+                    temperatureMetricUnit:'',
+                    WeatherText:'',
+                    WeatherIcon:''
                 });
                 this.setState({
                     searchInput:'',

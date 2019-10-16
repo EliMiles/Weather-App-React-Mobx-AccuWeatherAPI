@@ -5,7 +5,9 @@ class CurrentSelectedCityStore {
         name:'tel aviv',
         key:'215854',
         temperatureMetricValue:'',
-        temperatureMetricUnit:''
+        temperatureMetricUnit:'',
+        WeatherText:'',
+        WeatherIcon:''
     };
 
     @action changeCurrentSelctedCity = (cityObj) => {
@@ -13,6 +15,8 @@ class CurrentSelectedCityStore {
         this.currentSelectedCity.key = cityObj.key;
         this.currentSelectedCity.temperatureMetricValue = cityObj.temperatureMetricValue;
         this.currentSelectedCity.temperatureMetricUnit = cityObj.temperatureMetricUnit;
+        this.currentSelectedCity.WeatherText = cityObj.WeatherText;
+        this.currentSelectedCity.WeatherIcon = cityObj.WeatherIcon;
     }
 
     @computed get getCurrentSelctedCity() {
@@ -20,7 +24,9 @@ class CurrentSelectedCityStore {
             name:this.currentSelectedCity.name,
             key:this.currentSelectedCity.key,
             temperatureMetricValue:this.currentSelectedCity.temperatureMetricValue,
-            temperatureMetricUnit:this.currentSelectedCity.temperatureMetricUnit
+            temperatureMetricUnit:this.currentSelectedCity.temperatureMetricUnit,
+            WeatherText:this.currentSelectedCity.WeatherText,
+            WeatherIcon:this.currentSelectedCity.WeatherIcon
         }
     }
 }
