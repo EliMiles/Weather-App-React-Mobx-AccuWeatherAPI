@@ -1,5 +1,22 @@
-.WiDegrees {
+.WiCelsius {
     width: auto;
     height: 43px;
     margin-left: -10px;
+}
+
+.PrecipitationType {
+    text-align: center;
+}
+
+.FiveDaysForecast {
+    text-align: center;
+}
+
+.between-heart-and-buttons {
+    padding-right: 3px;
+}
+
+.hearts {
+    width: auto;
+    height: 25px;
 }
