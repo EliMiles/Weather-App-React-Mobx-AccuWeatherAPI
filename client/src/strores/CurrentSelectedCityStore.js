@@ -1,7 +1,10 @@
 import { observable, action, computed } from 'mobx';
 
 class CurrentSelectedCityStore {
-    @observable currentSelectedCity = {name:'tel aviv',key:'215854'};
+    @observable currentSelectedCity = {
+        name:'tel aviv',
+        key:'215854'
+    };
 
     @action changeCurrentSelctedCity = (cityObj) => {
         this.currentSelectedCity.name = cityObj.name;
@@ -9,7 +12,10 @@ class CurrentSelectedCityStore {
     }
 
     @computed get getCurrentSelctedCity() {
-        return {name:this.currentSelectedCity.name,key:this.currentSelectedCity.key}
+        return {
+            name:this.currentSelectedCity.name,
+            key:this.currentSelectedCity.key
+        }
     }
 }
 
