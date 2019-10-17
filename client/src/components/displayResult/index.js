@@ -10,10 +10,16 @@ import apiKeys from '../../apiKeys.js'; // (.gitignore) src/apiKeys.js => module
 
 import './style.css';
 
+@inject('FavoriteHomepageStore')
+@inject('FavoritesStore')
 @inject('CurrentSelectedCityStore')
 @inject('CityKeysStore')
 @observer
 class DisplayResult extends Component {
+
+    componentDidUpdate(){
+        this.checkFavoriteState();
+    }
 
     getTemperature = async () => {
         let ans = null;
@@ -23,6 +29,59 @@ class DisplayResult extends Component {
             console.log('Current Conditions endpoint was activated !');
         }
         return ans;
+    }
+
+    addToFavorites = () => {
+        const favoritesArr = this.props.FavoritesStore.getFavoriteCities
+
+        let existInFavorites = false;
+
+        for(let i=0;i<favoritesArr.length;i++){
+            if(favoritesArr[i] === this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name){
+                existInFavorites = true;
+                break;
+            }
+        }
+
+        if(!existInFavorites){
+            this.props.FavoritesStore.addFavoriteCity(this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name);
+            this.setState({isFavorite:true});
+        }
+    }
+
+    removeFromFavorites = () => {
+        const favoritesArr = this.props.FavoritesStore.getFavoriteCities
+
+        let existInFavorites = false;
+
+        for(let i=0;i<favoritesArr.length;i++){
+            if(favoritesArr[i] === this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name){
+                existInFavorites = true;
+                break;
+            }
+        }
+
+        if(existInFavorites){
+            this.props.FavoritesStore.removeFavoriteCity(this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name);
+            this.setState({isFavorite:false});
+        }
+    }
+
+    checkFavoriteState = () => {
+        const favoritesArr = this.props.FavoritesStore.getFavoriteCities
+
+        let existInFavorites = false;
+
+        for(let i=0;i<favoritesArr.length;i++){
+            if(favoritesArr[i] === this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name){
+                existInFavorites = true;
+                break;
+            }
+        }
+
+        if(existInFavorites !== this.props.FavoriteHomepageStore.getState ){
+            this.props.FavoriteHomepageStore.changeState(existInFavorites);
+        }
     }
 
     render() {
@@ -56,8 +115,12 @@ class DisplayResult extends Component {
         //     name:'paris',
         //     key:'1234',
         //     temperatureMetricValue:'15',
-        //     temperatureMetricUnit:'C'
+        //     temperatureMetricUnit:'C',
+        //     WeatherText:'cloudy',
+        //     WeatherIcon:20
         // });
+
+        console.log(this.props.FavoritesStore.getFavoriteCities);
         
         return (
             <Container>
@@ -76,11 +139,11 @@ class DisplayResult extends Component {
                     </Col>
                     <Col></Col>
                     <Col xs="auto" sm="auto" md="auto" large="auto" xl="auto">
-                        <FaRegHeart className="hearts" hidden={false} />
-                        <FaHeart className="hearts" hidden={true} />
+                        <FaRegHeart className="hearts" hidden={this.props.FavoriteHomepageStore.getState} />
+                        <FaHeart className="hearts" hidden={!this.props.FavoriteHomepageStore.getState} />
                         <span className="between-heart-and-buttons"></span>
-                        <Button hidden={false} variant="outline-info">Add to Favorites</Button>
-                        <Button hidden={true} variant="outline-info">Remove from Favorites</Button>
+                        <Button hidden={this.props.FavoriteHomepageStore.getState} onClick={(e) => this.addToFavorites()} variant="outline-info">Add to Favorites</Button>
+                        <Button hidden={!this.props.FavoriteHomepageStore.getState} onClick={(e) => this.removeFromFavorites()} variant="outline-info">Remove from Favorites</Button>
                     </Col>
                 </Row>
                 <Row>
