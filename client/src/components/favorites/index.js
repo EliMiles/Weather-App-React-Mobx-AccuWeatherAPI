@@ -11,11 +11,10 @@ import FavoriteCity from '../favoriteCity';
 @observer
 class Favorites extends Component {
     render() {
-        //console.log(this.props.FavoritesStore.getFavoriteCities.length);
         return (
             <div>
-                {this.props.FavoritesStore.getFavoriteCities.map(cityName => {
-                    return <FavoriteCity key={cityName} name={cityName} />
+                {this.props.FavoritesStore.getFavoriteCities.map(cityObj => {
+                    return <FavoriteCity key={cityObj.key} cityName={cityObj.name} cityKey={cityObj.key} />
                 })}
             </div>
         )

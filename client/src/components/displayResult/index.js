@@ -37,15 +37,17 @@ class DisplayResult extends Component {
         let existInFavorites = false;
 
         for(let i=0;i<favoritesArr.length;i++){
-            if(favoritesArr[i] === this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name){
+            if(favoritesArr[i].name === this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name){
                 existInFavorites = true;
                 break;
             }
         }
 
         if(!existInFavorites){
-            this.props.FavoritesStore.addFavoriteCity(this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name);
-            this.setState({isFavorite:true});
+            this.props.FavoritesStore.addFavoriteCity({
+                name:this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name,
+                key:this.props.CurrentSelectedCityStore.getCurrentSelctedCity.key
+            });
         }
     }
 
@@ -55,7 +57,7 @@ class DisplayResult extends Component {
         let existInFavorites = false;
 
         for(let i=0;i<favoritesArr.length;i++){
-            if(favoritesArr[i] === this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name){
+            if(favoritesArr[i].name === this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name){
                 existInFavorites = true;
                 break;
             }
@@ -63,7 +65,6 @@ class DisplayResult extends Component {
 
         if(existInFavorites){
             this.props.FavoritesStore.removeFavoriteCity(this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name);
-            this.setState({isFavorite:false});
         }
     }
 
@@ -73,7 +74,7 @@ class DisplayResult extends Component {
         let existInFavorites = false;
 
         for(let i=0;i<favoritesArr.length;i++){
-            if(favoritesArr[i] === this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name){
+            if(favoritesArr[i].name === this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name){
                 existInFavorites = true;
                 break;
             }

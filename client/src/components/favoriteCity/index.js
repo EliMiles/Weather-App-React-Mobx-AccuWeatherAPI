@@ -4,7 +4,7 @@ class FavoriteCity extends Component {
     render() {
         return (
             <div>
-                {this.props.name}
+                {this.props.cityName} {this.props.cityKey}
             </div>
         )
     }
