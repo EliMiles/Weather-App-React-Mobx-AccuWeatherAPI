@@ -34,10 +34,15 @@ class FavoriteCity extends Component {
                 }
             }
             else{
-                console.log('Error - can not find the temperature of this city !');
+                console.log({
+                    myMsg:'Error : FavoriteCity=>componentDidMount=>getTemperature().then : can not find the temperature of this city !'
+                });
             }
-        }, reason => {
-            console.error(reason); // Error!
+        }, error => {
+            console.error({
+                myMsg:'FavoriteCity=>componentDidMount=>getTemperature().then.error',
+                errorMsg:error
+            });
         });
     }
 
@@ -55,10 +60,21 @@ class FavoriteCity extends Component {
     getTemperature = async () => {
         let ans = null;
         const currentCityKey = this.props.cityKey;
+
         if(currentCityKey !== null && currentCityKey !== undefined){
-            ans = await axios.get('http://dataservice.accuweather.com/currentconditions/v1/' + currentCityKey + '?apikey=' + apiKeys.AccuWeatherKey);
-            console.log('Current Conditions endpoint was activated !');
+            try{
+                ans = await axios.get('http://dataservice.accuweather.com/currentconditions/v1/' + currentCityKey + '?apikey=' + apiKeys.AccuWeatherKey);
+                //console.log('Current Conditions endpoint was activated !');//!!!!!!!!!!!!
+            }
+            catch(error){
+                console.log({
+                    myMsg:'ERROR : FavoriteCity=>getTemperature : Current Conditions endpoint not succeeded!',
+                    errorMsg:error,
+                    ans:ans
+                });
+            }
         }
+
         return ans;
     }
 

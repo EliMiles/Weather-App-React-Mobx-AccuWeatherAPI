@@ -24,10 +24,21 @@ class DisplayResult extends Component {
     getTemperature = async () => {
         let ans = null;
         const currentCityKey = this.props.CurrentSelectedCityStore.getCurrentSelctedCity.key;
+
         if(currentCityKey !== null && currentCityKey !== undefined){
-            ans = await axios.get('http://dataservice.accuweather.com/currentconditions/v1/' + currentCityKey + '?apikey=' + apiKeys.AccuWeatherKey);
-            console.log('Current Conditions endpoint was activated !');
+            try{
+                ans = await axios.get('http://dataservice.accuweather.com/currentconditions/v1/' + currentCityKey + '?apikey=' + apiKeys.AccuWeatherKey);
+                //console.log('Current Conditions endpoint was activated !');//!!!!!!!!
+            }
+            catch(error){
+                console.log({
+                    myMsg:'ERROR : DisplayResult=>getTemperature : Current Conditions endpoint not succeeded!',
+                    errorMsg:error,
+                    ans:ans
+                });
+            }
         }
+        
         return ans;
     }
 
@@ -48,6 +59,8 @@ class DisplayResult extends Component {
                 name:this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name,
                 key:this.props.CurrentSelectedCityStore.getCurrentSelctedCity.key
             });
+
+            this.props.FavoriteHomepageStore.changeState(true);
         }
     }
 
@@ -65,6 +78,8 @@ class DisplayResult extends Component {
 
         if(existInFavorites){
             this.props.FavoritesStore.removeFavoriteCity(this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name);
+        
+            this.props.FavoriteHomepageStore.changeState(false);
         }
     }
 
@@ -87,7 +102,7 @@ class DisplayResult extends Component {
 
     render() {
         this.getTemperature().then(res => {
-            if(res !== undefined){
+            if(res !== undefined && res !== null){
                 if(res.data.length > 0){
                     const name = this.props.CurrentSelectedCityStore.getCurrentSelctedCity.name;
                     const key = this.props.CurrentSelectedCityStore.getCurrentSelctedCity.key;
@@ -106,10 +121,15 @@ class DisplayResult extends Component {
                 }
             }
             else{
-                console.log('Error - can not find the temperature of this city !');
+                console.log({
+                    myMsg:'Error : DisplayResult=>render=>getTemperature().then : can not find the temperature of this city !'
+                });
             }
-        }, reason => {
-            console.error(reason); // Error!
+        }, error => {
+            console.log({
+                myMsg:'Error : DisplayResult=>render=>getTemperature().then=>error',
+                errorMsg:error
+            });
         });
 
         // this.props.CurrentSelectedCityStore.changeCurrentSelctedCity({
@@ -121,7 +141,7 @@ class DisplayResult extends Component {
         //     WeatherIcon:20
         // });
 
-        console.log(this.props.FavoritesStore.getFavoriteCities);
+        //console.log(this.props.FavoritesStore.getFavoriteCities);//!!!!!!!!!!!!
         
         return (
             <Container>

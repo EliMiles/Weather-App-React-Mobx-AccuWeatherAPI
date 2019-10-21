@@ -4,7 +4,6 @@ import { inject, observer } from 'mobx-react';
 import FavoriteCity from '../favoriteCity';
 
 @inject('FavoritesStore')
-@inject('CityKeysStore')
 @observer
 class Favorites extends Component {
     render() {

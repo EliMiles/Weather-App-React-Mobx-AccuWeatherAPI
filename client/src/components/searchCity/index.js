@@ -89,9 +89,19 @@ class SearchCity extends Component {
             });
         }
         else{ // new city to check
-            const res = await axios.get('http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=' + apiKeys.AccuWeatherKey + '&q=' + cityName_no_spaces);
-            console.log('Autocomplete search endpoint was activated !');
-            if(res !== undefined && res.data.length > 0){
+            let res = null;
+            try{
+                res = await axios.get('http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=' + apiKeys.AccuWeatherKey + '&q=' + cityName_no_spaces);
+                //console.log('Autocomplete search endpoint was activated !');//!!!!!!
+            }
+            catch(error){
+                console.log({
+                    myMsg:'Error : SearchCity=>searchMyCity : Autocomplete search endpoint',
+                    errorMsg:error
+                });
+            }
+            
+            if(res !== undefined && res !== null && res.data.length > 0){
                 this.props.CityKeysStore.addCityKey({name:cityName_no_spaces,key:res.data[0].Key});
                 this.props.CurrentSelectedCityStore.changeCurrentSelctedCity({
                     name:cityName_no_spaces,
